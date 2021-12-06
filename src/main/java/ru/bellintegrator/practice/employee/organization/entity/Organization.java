@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.employee.organization.entity;
 
+import lombok.Data;
 import ru.bellintegrator.practice.employee.office.entity.Office;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.Set;
 /**
  * Organization
  */
+@Data
 @Entity(name = "Organization")
 public class Organization {
     @Id
@@ -71,86 +73,18 @@ public class Organization {
     @JoinColumn(name = "organization_id")
     private Set<Office> offices;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
+    public Organization(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
         this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public String getInn() {
-        return inn;
-    }
-
-    public void setInn(String inn) {
         this.inn = inn;
-    }
-
-    public String getKpp() {
-        return kpp;
-    }
-
-    public void setKpp(String kpp) {
         this.kpp = kpp;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
         this.phone = phone;
+        this.isActive = isActive;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
+    public Organization() {
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public Set<Office> getOffices() {
-        if(offices == null) {
-            offices = new HashSet<>();
-        }
-        return offices;
-    }
-
-    public void setOffices(Set<Office> offices) {
-        this.offices = offices;
     }
 }

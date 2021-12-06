@@ -1,15 +1,16 @@
 package ru.bellintegrator.practice.employee.office.entity;
 
 
+import lombok.Data;
 import ru.bellintegrator.practice.employee.person.entity.Person;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Office
  */
+@Data
 @Entity(name = "Office")
 public class Office {
 
@@ -60,71 +61,4 @@ public class Office {
     )
     @JoinColumn(name = "office_id")
     Set<Person> persons;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public Integer getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(Integer organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public Set<Person> getPersons() {
-        if(persons == null) {
-            persons = new HashSet<>();
-        }
-        return persons;
-    }
-
-    public void setPersons(Set<Person> persons) {
-        this.persons = persons;
-    }
 }

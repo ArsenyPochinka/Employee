@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.employee.person.entity;
 
+import lombok.Data;
 import ru.bellintegrator.practice.employee.guide.entity.Country;
 import ru.bellintegrator.practice.employee.guide.entity.Doc;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 /**
  * Person
  */
+@Data
 @Entity(name = "Person")
 public class Person {
 
@@ -87,95 +89,4 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "country_id")
     )
     private Set<Country> countries;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public Integer getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public String getThirdName() {
-        return thirdName;
-    }
-
-    public void setThirdName(String thirdName) {
-        this.thirdName = thirdName;
-    }
-
-    public String getPost() {
-        return post;
-    }
-
-    public void setPost(String post) {
-        this.post = post;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public boolean isIdentified() {
-        return isIdentified;
-    }
-
-    public void setIdentified(boolean identified) {
-        isIdentified = identified;
-    }
-
-    public Doc getDoc() {
-        return doc;
-    }
-
-    public void setDoc(Doc doc) {
-        this.doc = doc;
-    }
-
-    public Set<Country> getCountries() {
-        if(countries == null) {
-            countries = new HashSet<>();
-        }
-        return countries;
-    }
-
-    public void setCountries(Set<Country> countries) {
-        this.countries = countries;
-    }
 }
