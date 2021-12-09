@@ -8,20 +8,11 @@ import javax.validation.constraints.*;
 
         @Size(max = 50)
         @NotEmpty(message = "name cannot be null")
-        public String name;
+        private String name;
 
         @Size(max = 12)
-        public String inn;
+        private String inn;
 
-        public boolean isActive;
-
-        @Override
-        public String toString() {
-            return "{" +
-                    "name='" + name + '\'' +
-                    ", inn='" + inn + '\'' +
-                    ", isActive=" + isActive +
-                    '}';
-        }
+        private Boolean isActive;
     }
 

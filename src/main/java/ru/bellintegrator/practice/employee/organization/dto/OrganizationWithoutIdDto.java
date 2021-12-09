@@ -2,12 +2,11 @@ package ru.bellintegrator.practice.employee.organization.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.*;
-@Data
-public class OrganizationDto {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
-    @NotNull(message = "id cannot be null")
-    private Integer id;
+@Data
+public class OrganizationWithoutIdDto {
 
     @Size(max = 50)
     @NotEmpty(message = "name cannot be null")
@@ -34,8 +33,7 @@ public class OrganizationDto {
 
     private Boolean isActive;
 
-    public OrganizationDto(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
-        this.id = id;
+    public OrganizationWithoutIdDto(String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
         this.name = name;
         this.fullName = fullName;
         this.inn = inn;

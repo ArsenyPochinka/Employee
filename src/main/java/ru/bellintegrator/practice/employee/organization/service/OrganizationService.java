@@ -1,33 +1,32 @@
 package ru.bellintegrator.practice.employee.organization.service;
 
 import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.employee.organization.dto.OrganizationDto;
-import ru.bellintegrator.practice.employee.organization.dto.RequestParamsOrganizationDto;
-import ru.bellintegrator.practice.employee.organization.dto.ResponseParamsOrganizationDto;
+import ru.bellintegrator.practice.employee.organization.dto.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
- * Сервис
+ * Service
  */
 @Validated
 public interface OrganizationService {
 
     /**
-     * Get specific Organization's attributes (id, name, isActive)
+     * Get Organizations with specific attributes (id, name, isActive)
      * by parameters name, inn, isActive
      *
      * @param requestParamsOrganizationDto
-     * @return
+     * @return List<ResponseParamsOrganizationDto>
      */
-    ResponseParamsOrganizationDto getParamsOrganization(@Valid RequestParamsOrganizationDto requestParamsOrganizationDto);
+    List<ResponseParamsOrganizationDto> getByParams(@Valid RequestParamsOrganizationDto requestParamsOrganizationDto);
 
     /**
      * Get Organization by id
      *
      * @param id
-     * @return
+     * @return OrganizationDto
      */
     OrganizationDto getById(@NotNull Integer id);
 
@@ -41,7 +40,7 @@ public interface OrganizationService {
     /**
      * add new Organization in DB
      *
-     * @param organizationDto
+     * @param organizationWithoutIdDto
      */
-    void add(@Valid OrganizationDto organizationDto);
+    void add(@Valid OrganizationWithoutIdDto organizationWithoutIdDto);
 }

@@ -5,7 +5,6 @@ import ru.bellintegrator.practice.employee.guide.entity.Country;
 import ru.bellintegrator.practice.employee.guide.entity.Doc;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -47,8 +46,8 @@ public class Person {
     /**
      * third name
      */
-    @Column(name = "third_name", length = 50)
-    private String thirdName;
+    @Column(name = "middle_name", length = 50)
+    private String middleName;
 
     /**
      * post
@@ -63,7 +62,7 @@ public class Person {
     private String phone;
 
     /**
-     * is identified = 1 is true, 0 is false
+     * is identified = true / false
      */
     @Column(name = "is_identified")
     private boolean isIdentified;

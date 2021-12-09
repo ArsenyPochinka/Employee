@@ -1,14 +1,16 @@
 package ru.bellintegrator.practice.employee.guide.entity;
 
 import lombok.Data;
+import ru.bellintegrator.practice.employee.person.entity.Person;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Type of doc
  */
 @Data
-@Entity(name = "TypeDoc")
+@Entity(name = "Type_Doc")
 public class TypeDoc {
 
     @Id
@@ -27,4 +29,5 @@ public class TypeDoc {
      */
     @Column(name = "code", length = 10, nullable = false)
     private String code;
+
 }

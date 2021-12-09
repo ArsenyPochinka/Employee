@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.employee.organization.dao.OrganizationDao;
-import ru.bellintegrator.practice.employee.organization.dto.OrganizationDto;
-import ru.bellintegrator.practice.employee.organization.dto.RequestParamsOrganizationDto;
-import ru.bellintegrator.practice.employee.organization.dto.ResponseParamsOrganizationDto;
-import ru.bellintegrator.practice.employee.organization.entity.Organization;
+import ru.bellintegrator.practice.employee.organization.dto.*;
+import ru.bellintegrator.practice.employee.organization.entity.OrganizationEntity;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * {@inheritDoc}
@@ -26,10 +27,9 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseParamsOrganizationDto getParamsOrganization(RequestParamsOrganizationDto request) {
-        Organization organization = dao.loadByName(request.getName());
-        ResponseParamsOrganizationDto response = new ResponseParamsOrganizationDto(organization.getId(), organization.getName(), organization.isActive());
-        return response;
+    public List<ResponseParamsOrganizationDto> getByParams(RequestParamsOrganizationDto request) {
+        List<OrganizationEntity> organizationEntities = dao.loadByParams(request.getName(), request.getInn(), request.getIsActive());
+        return organizationEntities.stream().map(oe -> new ResponseParamsOrganizationDto(oe.getId(), oe.getName(), oe.getIsActive())).collect(Collectors.toList());
     }
 
     /**
@@ -38,9 +38,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional(readOnly = true)
     public OrganizationDto getById(Integer id) {
-        Organization organization = dao.loadById(id);
-        OrganizationDto response = new OrganizationDto(organization.getId(), organization.getName(), organization.getFullName(), organization.getInn(), organization.getKpp(), organization.getAddress(), organization.getPhone(), organization.isActive());
-        return response;
+        OrganizationEntity organizationEntity = dao.loadById(id);
+        return new OrganizationDto(organizationEntity.getId(), organizationEntity.getName(), organizationEntity.getFullName(), organizationEntity.getInn(), organizationEntity.getKpp(), organizationEntity.getAddress(), organizationEntity.getPhone(), organizationEntity.getIsActive());
     }
 
     /**
@@ -49,15 +48,14 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public void update(OrganizationDto organizationDto) {
-       dao.update(organizationDto.getId(), organizationDto.getName(), organizationDto.getFullName(), organizationDto.getInn(), organizationDto.getKpp(), organizationDto.getAddress(), organizationDto.getPhone(), organizationDto.isActive());
-       // return number of changed
+        OrganizationEntity newOrganizationEntity = new OrganizationEntity(organizationDto.getId(), organizationDto.getName(), organizationDto.getFullName(), organizationDto.getInn(), organizationDto.getKpp(), organizationDto.getAddress(), organizationDto.getPhone(), organizationDto.getIsActive());
+        dao.update(newOrganizationEntity);
     }
 
     @Override
     @Transactional
-    public void add(OrganizationDto organizationDto) {
-        Organization newOrganization = new Organization(organizationDto.getId(), organizationDto.getName(), organizationDto.getFullName(), organizationDto.getInn(), organizationDto.getKpp(), organizationDto.getAddress(), organizationDto.getPhone(), organizationDto.isActive());
-        dao.save(newOrganization);
-        // return number of changed
+    public void add(OrganizationWithoutIdDto organizationWithoutIdDto) {
+        OrganizationEntity newOrganizationEntity = new OrganizationEntity(organizationWithoutIdDto.getName(), organizationWithoutIdDto.getFullName(), organizationWithoutIdDto.getInn(), organizationWithoutIdDto.getKpp(), organizationWithoutIdDto.getAddress(), organizationWithoutIdDto.getPhone(), organizationWithoutIdDto.getIsActive());
+        dao.save(newOrganizationEntity);
     }
 }

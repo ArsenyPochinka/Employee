@@ -12,7 +12,7 @@ import java.util.Set;
  */
 @Data
 @Entity(name = "Office")
-public class Office {
+public class OfficeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +34,13 @@ public class Office {
     /**
      * name
      */
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 50)
     private String name;
 
     /**
      * address
      */
-    @Column(name = "address", length = 50, nullable = false)
+    @Column(name = "address", length = 50)
     private String address;
 
     /**
@@ -50,15 +50,36 @@ public class Office {
     private String phone;
 
     /**
-     * is active = 1 is true, 0 is false
+     * is active = true / false
      */
     @Column(name = "is_active")
-    private boolean isActive;
+    private Boolean isActive;
 
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @JoinColumn(name = "office_id")
-    Set<Person> persons;
+    private Set<Person> persons;
+
+    public OfficeEntity(String name, String address, String phone, Boolean isActive) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
+    }
+
+    public OfficeEntity(Integer organizationId, String name, String address, String phone, Boolean isActive) {
+        this.organizationId = organizationId;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
+    }
+
+
+
+    public OfficeEntity() {
+
+    }
 }

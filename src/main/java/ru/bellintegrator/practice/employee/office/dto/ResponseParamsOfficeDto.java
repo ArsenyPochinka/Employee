@@ -1,9 +1,9 @@
-package ru.bellintegrator.practice.employee.organization.dto;
+package ru.bellintegrator.practice.employee.office.dto;
 
 import lombok.Data;
 
 @Data
-public class ResponseParamsOrganizationDto {
+public class ResponseParamsOfficeDto {
 
     private Integer id;
 
@@ -11,7 +11,7 @@ public class ResponseParamsOrganizationDto {
 
     private Boolean isActive;
 
-    public ResponseParamsOrganizationDto(Integer id, String name, Boolean isActive) {
+    public ResponseParamsOfficeDto(Integer id, String name, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.isActive = isActive;

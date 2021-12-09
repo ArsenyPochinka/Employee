@@ -2,10 +2,10 @@ package ru.bellintegrator.practice.employee.organization.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.bellintegrator.practice.employee.organization.dto.OrganizationDto;
-import ru.bellintegrator.practice.employee.organization.dto.RequestParamsOrganizationDto;
-import ru.bellintegrator.practice.employee.organization.dto.ResponseParamsOrganizationDto;
+import ru.bellintegrator.practice.employee.organization.dto.*;
 import ru.bellintegrator.practice.employee.organization.service.OrganizationService;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -26,8 +26,8 @@ public class OrganizationController {
     }
 
     @PostMapping("/list")
-    public ResponseParamsOrganizationDto getParamsOrganization(@RequestBody RequestParamsOrganizationDto request) {
-        return organizationService.getParamsOrganization(request);
+    public List<ResponseParamsOrganizationDto> getParamsOrganization(@RequestBody RequestParamsOrganizationDto request) {
+        return organizationService.getByParams(request);
     }
 
     @PostMapping("/update")
@@ -36,7 +36,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/save")
-    public void save(@RequestBody OrganizationDto request) {
+    public void save(@RequestBody OrganizationWithoutIdDto request) {
         organizationService.add(request);
     }
 

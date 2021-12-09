@@ -1,10 +1,9 @@
 package ru.bellintegrator.practice.employee.organization.entity;
 
 import lombok.Data;
-import ru.bellintegrator.practice.employee.office.entity.Office;
+import ru.bellintegrator.practice.employee.office.entity.OfficeEntity;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Set;
  */
 @Data
 @Entity(name = "Organization")
-public class Organization {
+public class OrganizationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -61,19 +60,19 @@ public class Organization {
     private String phone;
 
     /**
-     * is active = 1 is true, 0 is false
+     * is active = true / false
      */
     @Column(name = "is_active")
-    private boolean isActive;
+    private Boolean isActive;
 
     @OneToMany(
         cascade = CascadeType.ALL,
         orphanRemoval = true
     )
     @JoinColumn(name = "organization_id")
-    private Set<Office> offices;
+    private Set<OfficeEntity> officeEntities;
 
-    public Organization(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
+    public OrganizationEntity(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.fullName = fullName;
@@ -84,7 +83,16 @@ public class Organization {
         this.isActive = isActive;
     }
 
-    public Organization() {
+    public OrganizationEntity(String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
+        this.name = name;
+        this.fullName = fullName;
+        this.inn = inn;
+        this.kpp = kpp;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
+    }
 
+    public OrganizationEntity() {
     }
 }

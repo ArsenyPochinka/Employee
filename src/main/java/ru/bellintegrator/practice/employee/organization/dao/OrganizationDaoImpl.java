@@ -2,13 +2,13 @@ package ru.bellintegrator.practice.employee.organization.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.employee.organization.entity.Organization;
+import ru.bellintegrator.practice.employee.organization.entity.OrganizationEntity;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -29,8 +29,8 @@ public class OrganizationDaoImpl implements OrganizationDao {
      * {@inheritDoc}
      */
     @Override
-    public List<Organization> all() {
-        TypedQuery<Organization> query = em.createQuery("SELECT o FROM Organization o", Organization.class);
+    public List<OrganizationEntity> all() {
+        TypedQuery<OrganizationEntity> query = em.createQuery("SELECT o FROM Organization o", OrganizationEntity.class);
         return query.getResultList();
     }
 
@@ -38,57 +38,77 @@ public class OrganizationDaoImpl implements OrganizationDao {
      * {@inheritDoc}
      */
     @Override
-    public Organization loadById(Integer id) {
-        return em.find(Organization.class, id);
+    public OrganizationEntity loadById(Integer id) {
+        return em.find(OrganizationEntity.class, id);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Organization loadByName(String name) {
-        CriteriaQuery<Organization> criteria = buildCriteria(name);
-        TypedQuery<Organization> query = em.createQuery(criteria);
-        return query.getSingleResult();
+    public List<OrganizationEntity> loadByParams(String name, String inn, Boolean isActive) {
+        CriteriaQuery<OrganizationEntity> criteria = buildCriteriaQuery(name, inn, isActive);
+        TypedQuery<OrganizationEntity> query = em.createQuery(criteria);
+        return query.getResultList();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(Organization organization) {
-        em.persist(organization);
+    public void save(OrganizationEntity organizationEntity) {
+        em.persist(organizationEntity);
     }
 
     /**
      * {@inheritDoc}
-     * @return
      */
     @Override
-    public int update(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
-        Query query = em.createQuery("UPDATE Organization o SET o.name = :nameParam, " +
-                "o.fullName = :fullNameParam, o.inn = :innParam, o.kpp = :kppParam, " +
-                "o.address = :addressParam, o.phone = :phoneParam, o.isActive = :isActiveParam" +
-                " WHERE o.id = :idParam ");
-        query.setParameter("nameParam", name);
-        query.setParameter("fullNameParam", fullName);
-        query.setParameter("innParam", inn);
-        query.setParameter("kppParam", kpp);
-        query.setParameter("addressParam", address);
-        query.setParameter("phoneParam", phone);
-        query.setParameter("isActiveParam", isActive);
-        query.setParameter("idParam", id);
-        return query.executeUpdate();
-
+    public void update(OrganizationEntity organizationEntity) {
+        em.createQuery(buildCriteriaUpdate(organizationEntity)).executeUpdate();
     }
 
-    private CriteriaQuery<Organization> buildCriteria(String name) {
+    private CriteriaQuery<OrganizationEntity> buildCriteriaQuery(String name, String inn, Boolean isActive) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Organization> criteria = builder.createQuery(Organization.class);
+        CriteriaQuery<OrganizationEntity> criteriaQuery = builder.createQuery(OrganizationEntity.class);
 
-        Root<Organization> organization = criteria.from(Organization.class);
-        criteria.where(builder.equal(organization.get("name"), name));
+        Root<OrganizationEntity> root = criteriaQuery.from(OrganizationEntity.class);
 
-        return criteria;
+        if(inn != null && isActive != null) {
+            criteriaQuery.where(root.get("name").in(name), root.get("inn").in(inn), root.get("isActive").in(isActive));
+        }
+        if(inn != null && isActive == null) {
+            criteriaQuery.where(root.get("name").in(name), root.get("inn").in(inn));
+        }
+        if(inn == null && isActive != null) {
+            criteriaQuery.where(root.get("name").in(name), root.get("isActive").in(isActive));
+        }
+        if(inn == null && isActive == null) {
+            criteriaQuery.where(root.get("name").in(name));
+        }
+
+        return criteriaQuery;
     }
+
+    private CriteriaUpdate<OrganizationEntity> buildCriteriaUpdate(OrganizationEntity organizationEntity) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaUpdate<OrganizationEntity> criteriaUpdate = builder.createCriteriaUpdate(OrganizationEntity.class);
+        Root<OrganizationEntity> root = criteriaUpdate.from(OrganizationEntity.class);
+        criteriaUpdate.set("name", organizationEntity.getName());
+        criteriaUpdate.set("fullName", organizationEntity.getFullName());
+        criteriaUpdate.set("inn", organizationEntity.getInn());
+        criteriaUpdate.set("kpp", organizationEntity.getKpp());
+        criteriaUpdate.set("address", organizationEntity.getAddress());
+        if(organizationEntity.getPhone() != null) {
+            criteriaUpdate.set("phone", organizationEntity.getPhone());
+        }
+        if(organizationEntity.getIsActive() != null) {
+            criteriaUpdate.set("isActive", organizationEntity.getIsActive());
+        }
+        criteriaUpdate.where(builder.equal(root.get("id"), organizationEntity.getId()));
+
+        return criteriaUpdate;
+    }
+
+
 }

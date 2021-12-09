@@ -1,6 +1,6 @@
 package ru.bellintegrator.practice.employee.organization.dao;
 
-import ru.bellintegrator.practice.employee.organization.entity.Organization;
+import ru.bellintegrator.practice.employee.organization.entity.OrganizationEntity;
 
 import java.util.List;
 
@@ -11,38 +11,37 @@ public interface OrganizationDao {
     /**
      * Get all Organizations
      *
-     * @return
+     * @return List<OrganizationEntity>
      */
-    List<Organization> all();
+    List<OrganizationEntity> all();
 
     /**
      * Get Organization by id
      *
      * @param id
-     * @return
+     * @return OrganizationEntity
      */
-    Organization loadById(Integer id);
+    OrganizationEntity loadById(Integer id);
 
     /**
-     * Get Organization by name
+     * Get Organizations by params (name, inn, isActive)
      *
-     * @param name
-     * @return
+     * @param name, inn, isActive
+     * @return List<OrganizationEntity>
      */
-    Organization loadByName(String name);
+    List<OrganizationEntity> loadByParams(String name, String inn, Boolean isActive);
 
     /**
      * Update Organization
      *
-     * @param id, name, fullName, inn, kpp, address, phone, isActive;
-     * @return
+     * @param organizationEntity ;
      */
-    int update(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive);
+    void update(OrganizationEntity organizationEntity);
 
     /**
      * Save new Organization
      *
-     * @param organization
+     * @param organizationEntity
      */
-    void save(Organization organization);
+    void save(OrganizationEntity organizationEntity);
 }
