@@ -1,4 +1,4 @@
-package ru.bellintegrator.practice.employee.guide.entity;
+package ru.bellintegrator.practice.employee.directory.entity;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity(name = "Country")
-public class Country {
+public class CountryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +25,25 @@ public class Country {
     /**
      * name
      */
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 50)
     private String name;
 
     /**
      * code
      */
-    @Column(name = "code", length = 10, nullable = false)
+    @Column(name = "code", length = 10)
     private String code;
+
+    public CountryEntity(String code) {
+        this.code = code;
+    }
+
+    public CountryEntity(String name, String code) {
+        this.name = name;
+        this.code = code;
+    }
+
+    public CountryEntity() {
+
+    }
 }

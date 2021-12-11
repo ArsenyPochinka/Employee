@@ -1,7 +1,7 @@
-package ru.bellintegrator.practice.employee.guide.entity;
+package ru.bellintegrator.practice.employee.person.entity;
 
 import lombok.Data;
-import ru.bellintegrator.practice.employee.person.entity.Person;
+import ru.bellintegrator.practice.employee.directory.entity.TypeDocEntity;
 
 import javax.persistence.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity(name = "Doc")
-public class Doc {
+public class DocEntity {
 
     @Id
     @Column(name = "person_id")
@@ -36,9 +36,20 @@ public class Doc {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    private Person person;
+    @JoinColumn(name = "person_id")
+    private PersonEntity person;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_type_id")
-    private TypeDoc typeDoc;
+    private TypeDocEntity typeDoc;
+
+    public DocEntity(String docNumber, String docDate, TypeDocEntity typeDoc) {
+        this.docNumber = docNumber;
+        this.docDate = docDate;
+        this.typeDoc = typeDoc;
+    }
+
+    public DocEntity() {
+
+    }
 }

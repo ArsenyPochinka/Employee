@@ -2,7 +2,7 @@ package ru.bellintegrator.practice.employee.office.entity;
 
 
 import lombok.Data;
-import ru.bellintegrator.practice.employee.person.entity.Person;
+import ru.bellintegrator.practice.employee.person.entity.PersonEntity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -60,7 +60,7 @@ public class OfficeEntity {
             orphanRemoval = true
     )
     @JoinColumn(name = "office_id")
-    private Set<Person> persons;
+    private Set<PersonEntity> personEntities;
 
     public OfficeEntity(String name, String address, String phone, Boolean isActive) {
         this.name = name;

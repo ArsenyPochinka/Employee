@@ -79,8 +79,8 @@ COMMENT ON COLUMN Doc.doc_date IS 'date of doc';
 
 CREATE TABLE IF NOT EXISTS Type_Doc (
                                        id   SERIAL PRIMARY KEY,
-                                       name VARCHAR(50) NOT NULL,
-                                       code VARCHAR(10) NOT NULL
+                                       name VARCHAR(50),
+                                       code VARCHAR(10)
     );
 
 COMMENT ON TABLE Type_Doc IS 'Type of doc';
@@ -91,8 +91,8 @@ COMMENT ON COLUMN Type_Doc.code IS 'code';
 CREATE TABLE IF NOT EXISTS Country (
                                        id      SERIAL PRIMARY KEY,
                                        version INTEGER NOT NULL,
-                                       name    VARCHAR(50) NOT NULL,
-                                       code    VARCHAR(10) NOT NULL
+                                       name    VARCHAR(50) ,
+                                       code    VARCHAR(10)
     );
 
 COMMENT ON TABLE Country IS 'Country';
