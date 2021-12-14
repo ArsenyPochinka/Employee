@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<UserEntity> criteriaQuery = criteriaBuilder.createQuery(UserEntity.class);
         Root<UserEntity> userRoot = criteriaQuery.from(UserEntity.class);
-        Predicate predicate = criteriaBuilder.like(userRoot.get("officeId"), "%" + filter.getOfficeId() + "%");
+        Predicate predicate = criteriaBuilder.equal(userRoot.get("officeId"), filter.getOfficeId());
         if (filter.getFirstName() != null) {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(userRoot.get("firstName"), filter.getFirstName()));
         }

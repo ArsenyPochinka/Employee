@@ -42,6 +42,7 @@ public class OfficeServiceImpl implements OfficeService {
         }
         validateFilter(filter);
         OfficeEntity office = new OfficeEntity();
+        office.setOrgId(filter.getOrgId());
         office.setName(filter.getName());
         office.setPhone(filter.getPhone());
         office.setIsActive(filter.getIsActive());

@@ -36,13 +36,13 @@ public class UserEntity {
     private String firstName;
 
     /**
-     * second name of user
+     * last name of user
      */
     @Column(name = "last_name", length = 50)
     private String lastName;
 
     /**
-     * third name of user
+     * middle name of user
      */
     @Column(name = "middle_name", length = 50)
     private String middleName;
