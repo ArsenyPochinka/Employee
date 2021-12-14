@@ -1,46 +1,41 @@
 package ru.bellintegrator.practice.employee.organization.service;
 
-import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.employee.organization.dto.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * Service
+ * An interface that provides methods for working with organizations
  */
-@Validated
 public interface OrganizationService {
 
     /**
-     * Get Organizations with specific attributes (id, name, isActive)
-     * by parameters name, inn, isActive
+     * Returns a filtered list of organizations
      *
-     * @param requestParamsOrganizationDto
-     * @return List<ResponseParamsOrganizationDto>
+     * @param filter (filter for the list)
+     * @return filtered list
      */
-    List<ResponseParamsOrganizationDto> getByParams(@Valid RequestParamsOrganizationDto requestParamsOrganizationDto);
+    List<OrganizationFilterResponseDto> list(OrganizationFilterRequestDto filter);
 
     /**
-     * Get Organization by id
+     * Returns the organization with the specified ID
      *
-     * @param id
-     * @return OrganizationDto
+     * @param id (organization id)
+     * @return the organization with the specified id
      */
-    OrganizationDto getById(@NotNull Integer id);
+    OrganizationDto getById(Integer id);
 
     /**
-     * update Organization by id
+     * Updates information about the organization
      *
-     * @param organizationDto
+     * @param updateOrganization (object containing information to update)
      */
-    void update(@Valid OrganizationDto organizationDto);
+    void update(OrganizationUpdateDto updateOrganization);
 
     /**
-     * add new Organization in DB
+     * Saves information about the new organization
      *
-     * @param organizationWithoutIdDto
+     * @param newOrganization (an object containing information about the new organization)
      */
-    void add(@Valid OrganizationWithoutIdDto organizationWithoutIdDto);
+    void save(OrganizationSaveDto newOrganization);
 }

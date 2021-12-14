@@ -9,39 +9,32 @@ import java.util.List;
  */
 public interface OrganizationDao {
     /**
-     * Get all Organizations
+     * Returns a filtered list of organizations
      *
-     * @return List<OrganizationEntity>
+     * @param filter (object with filtering data)
+     * @return filtered list of organizations
      */
-    List<OrganizationEntity> all();
+    List<OrganizationEntity> list(OrganizationEntity filter);
 
     /**
-     * Get Organization by id
+     * Returns the organization with the specified ID
      *
-     * @param id
-     * @return OrganizationEntity
+     * @param id (organization id)
+     * @return organization with the specified id
      */
-    OrganizationEntity loadById(Integer id);
+    OrganizationEntity getById(Integer id);
 
     /**
-     * Get Organizations by params (name, inn, isActive)
+     * Updates information about the organization
      *
-     * @param name, inn, isActive
-     * @return List<OrganizationEntity>
+     * @param updateOrganization (object with new organization data)
      */
-    List<OrganizationEntity> loadByParams(String name, String inn, Boolean isActive);
+    void update(OrganizationEntity updateOrganization);
 
     /**
-     * Update Organization
+     * Saves information about the new organization
      *
-     * @param organizationEntity ;
+     * @param newOrganization (object with data about the new organization)
      */
-    void update(OrganizationEntity organizationEntity);
-
-    /**
-     * Save new Organization
-     *
-     * @param organizationEntity
-     */
-    void save(OrganizationEntity organizationEntity);
+    void save(OrganizationEntity newOrganization);
 }

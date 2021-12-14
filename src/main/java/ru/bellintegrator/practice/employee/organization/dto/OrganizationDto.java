@@ -2,46 +2,41 @@ package ru.bellintegrator.practice.employee.organization.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.*;
-@Data
-public class OrganizationDto {
-
-    @NotNull(message = "id cannot be null")
-    private Integer id;
-
-    @Size(max = 50)
-    @NotEmpty(message = "name cannot be null")
-    private String name;
-
-    @Size(max = 50)
-    @NotEmpty(message = "full name cannot be null")
-    private String fullName;
-
-    @Size(max = 12)
-    @NotEmpty(message = "inn cannot be null")
-    private String inn;
-
-    @Size(max = 9)
-    @NotEmpty(message = "kpp cannot be null")
-    private String kpp;
-
-    @Size(max = 50)
-    @NotEmpty(message = "address cannot be null")
-    private String address;
-
-    @Size(max = 16)
-    private String phone;
-
-    private Boolean isActive;
-
-    public OrganizationDto(Integer id, String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
-        this.id = id;
-        this.name = name;
-        this.fullName = fullName;
-        this.inn = inn;
-        this.kpp = kpp;
-        this.address = address;
-        this.phone = phone;
-        this.isActive = isActive;
+    /**
+     * Organization DTO
+     */
+    @Data
+    public class OrganizationDto {
+        /**
+         * Unique organization identifier
+         */
+        private Integer id;
+        /**
+         * name of Organization
+         */
+        private String name;
+        /**
+         * full name  of Organization
+         */
+        private String fullName;
+        /**
+         * inn of Organization
+         */
+        private String inn;
+        /**
+         * kpp of Organization
+         */
+        private String kpp;
+        /**
+         * address of Organization
+         */
+        private String address;
+        /**
+         * phone  of Organization
+         */
+        private String phone;
+        /**
+         * Is the organization in operation (is_active = true / false)
+         */
+        private Boolean isActive;
     }
-}
