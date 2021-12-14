@@ -10,6 +10,7 @@ import ru.bellintegrator.practice.employee.exception.RecordNotFoundException;
 import ru.bellintegrator.practice.employee.exception.WrongRequestException;
 import ru.bellintegrator.practice.employee.organization.dao.OrganizationDao;
 import ru.bellintegrator.practice.employee.organization.dto.*;
+import ru.bellintegrator.practice.employee.organization.dto.OrganizationUpdateDto;
 import ru.bellintegrator.practice.employee.organization.entity.OrganizationEntity;
 
 import java.util.List;
@@ -55,11 +56,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (id == null) {
             throw new WrongRequestException("Field ID is null.");
         }
-        OrganizationEntity organizationEntity = dao.getById(id);
-        if (organizationEntity == null) {
+        OrganizationEntity organization = dao.getById(id);
+        if (organization == null) {
             throw new RecordNotFoundException("Record with ID = " + id + " was not found in Organization.");
         }
-        return mapOrganizationDtoFromEntity(organizationEntity);
+        return mapOrganizationDtoFromEntity(organization);
     }
 
     /**
@@ -117,7 +118,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private OrganizationEntity mapOrganizationEntityFromSaveDto(OrganizationSaveDto dto) {
 
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-        mapperFactory.classMap(OrganizationSaveDto.class, OrganizationEntity.class).exclude("id").mapNulls(false).byDefault().register();
+        mapperFactory.classMap(OrganizationSaveDto.class, OrganizationEntity.class).mapNulls(false).byDefault().register();
         MapperFacade mapperFacade = mapperFactory.getMapperFacade();
 
         return mapperFacade.map(dto, OrganizationEntity.class);
@@ -168,53 +169,53 @@ public class OrganizationServiceImpl implements OrganizationService {
     private void validateUpdate(OrganizationUpdateDto updateOrganization) {
         StringBuilder message = new StringBuilder();
         if (updateOrganization.getId() == null) {
-            message.append("Field ID is null.");
+            message.append("Field ID is null. ");
         }
         if (updateOrganization.getName() == null || !isNameValid(updateOrganization.getName())) {
-            message.append("Field NAME is null or invalid.");
+            message.append("Field NAME is null or invalid. ");
         }
         if (updateOrganization.getFullName() == null || !isFullNameValid(updateOrganization.getFullName())) {
-            message.append("Field FULLNAME is null or invalid.");
+            message.append("Field FULL NAME is null or invalid. ");
         }
         if (updateOrganization.getInn() == null || !isInnValid(updateOrganization.getInn())) {
-            message.append("Field INN is null or invalid.");
+            message.append("Field INN is null or invalid. ");
         }
         if (updateOrganization.getKpp() == null || !isKppValid(updateOrganization.getKpp())) {
-            message.append("Field KPP is null or invalid.");
+            message.append("Field KPP is null or invalid. ");
         }
         if (updateOrganization.getAddress() == null || !isAddressValid(updateOrganization.getAddress())) {
-            message.append("Field ADDRESS is null or invalid.");
+            message.append("Field ADDRESS is null or invalid. ");
         }
         if (!isPhoneValid(updateOrganization.getPhone())) {
-            message.append("Field PHONE is invalid.");
+            message.append("Field PHONE is invalid. ");
         }
         if (message.length() > 0) {
             throw new WrongRequestException(message.toString().trim());
         }
         if (dao.getById(updateOrganization.getId()) == null) {
-            throw new RecordNotFoundException("Record with ID " + updateOrganization.getId() + " wasn't found.\n");
+            throw new RecordNotFoundException("Record with ID " + updateOrganization.getId() + " wasn't found. ");
         }
     }
 
     private void validateSave(OrganizationSaveDto saveOrganization) {
         StringBuilder message = new StringBuilder();
         if (saveOrganization.getName() == null || !isNameValid(saveOrganization.getName())) {
-            message.append("Field NAME is null or invalid.");
+            message.append("Field NAME is null or invalid. ");
         }
         if (saveOrganization.getFullName() == null || !isFullNameValid(saveOrganization.getFullName())) {
-            message.append("Field FULLNAME is null or invalid.");
+            message.append("Field FULL NAME is null or invalid. ");
         }
         if (saveOrganization.getInn() == null || !isInnValid(saveOrganization.getInn())) {
-            message.append("Field INN is null or invalid.");
+            message.append("Field INN is null or invalid. ");
         }
         if (saveOrganization.getKpp() == null || !isKppValid(saveOrganization.getKpp())) {
-            message.append("Field KPP is null or invalid.");
+            message.append("Field KPP is null or invalid. ");
         }
         if (saveOrganization.getAddress() == null || !isAddressValid(saveOrganization.getAddress())) {
-            message.append("Field ADDRESS is null or invalid.");
+            message.append("Field ADDRESS is null or invalid. ");
         }
         if (!isPhoneValid(saveOrganization.getPhone())) {
-            message.append("Field PHONE is invalid.");
+            message.append("Field PHONE is invalid. ");
         }
         if (message.length() > 0) {
             throw new WrongRequestException(message.toString().trim());

@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS "User" (
                                       version       INTEGER NOT NULL,
                                       office_id     INTEGER NOT NULL,
                                       first_name    VARCHAR(50) NOT NULL,
-                                      second_name   VARCHAR(50),
+                                      last_name     VARCHAR(50),
                                       middle_name   VARCHAR(50),
                                       position      VARCHAR(50) NOT NULL,
                                       phone         VARCHAR(16),
@@ -58,7 +58,7 @@ COMMENT ON COLUMN "User".id IS 'Unique user identifier';
 COMMENT ON COLUMN "User".version IS 'Service field hibernate';
 COMMENT ON COLUMN "User".office_id IS 'Unique office identifier';
 COMMENT ON COLUMN "User".first_name IS 'firstname of user';
-COMMENT ON COLUMN "User".second_name IS 'second name  of user';
+COMMENT ON COLUMN "User".last_name IS 'last name  of user';
 COMMENT ON COLUMN "User".middle_name IS 'middle name  of user';
 COMMENT ON COLUMN "User".position Is 'position in office of user';
 COMMENT ON COLUMN "User".phone IS 'phone  of user';
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Doc (
                                    version     INTEGER NOT NULL,
                                    doc_type_id INTEGER,
                                    doc_number  VARCHAR(12),
-                                   doc_date    VARCHAR(10)
+                                   doc_date    DATE
     );
 
 COMMENT ON TABLE Doc IS 'Doc of user';
@@ -80,12 +80,14 @@ COMMENT ON COLUMN Doc.doc_number IS 'number of doc';
 COMMENT ON COLUMN Doc.doc_date IS 'date of doc';
 
 CREATE TABLE IF NOT EXISTS Type_Doc (
-                                       id   SERIAL PRIMARY KEY,
-                                       name VARCHAR(50),
-                                       code VARCHAR(10)
+                                       id      SERIAL PRIMARY KEY,
+                                       version INTEGER NOT NULL,
+                                       name    VARCHAR(50),
+                                       code    VARCHAR(10)
     );
 
 COMMENT ON TABLE Type_Doc IS 'Type of doc';
+COMMENT ON COLUMN Type_Doc.version IS 'Service field hibernate';
 COMMENT ON COLUMN Type_Doc.id IS 'Unique type of doc identifier';
 COMMENT ON COLUMN Type_Doc.name IS 'name type of doc';
 COMMENT ON COLUMN Type_Doc.code IS 'code type of doc';

@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.employee.directory.dao;
 
 import ru.bellintegrator.practice.employee.directory.entity.CountryEntity;
+import ru.bellintegrator.practice.employee.directory.entity.TypeDocEntity;
 
 import java.util.List;
 
@@ -9,29 +10,24 @@ import java.util.List;
  */
 public interface CountryDao {
     /**
-     * Get all Countries
+     * Returns a list of countries and their codes
      *
-     * @return List<CountryEntity>
+     * @return list of countries and their codes
      */
-    List<CountryEntity> all();
-        /**
-     * Get Guides of country by specific attributes (name, code)
-     *
-     * @param name, code
-     * @return List<CountryEntity>
-     */
-     List<CountryEntity> loadByParams(String name, String code);
+    List<CountryEntity> list();
+
     /**
-     * Get Guides of country by specific attributes (name, code)
+     * Returns the country with the specified code
      *
-     * @param code
-     * @return List<CountryEntity>
+     * @param code code of country
+     * @return country with the specified code
      */
-    List<CountryEntity> loadByCode(String code);
+    CountryEntity getByCode(String code);
     /**
      * Save new Country
      *
-     * @param countryEntity
+     * @param newCountry (object with data about the new country)
+     * @return new country
      */
-    void save(CountryEntity countryEntity);
+    CountryEntity save(CountryEntity newCountry);
 }

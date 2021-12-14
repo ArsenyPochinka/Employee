@@ -1,23 +1,17 @@
 package ru.bellintegrator.practice.employee.directory.dto;
 
 import lombok.Data;
-
-import javax.validation.constraints.Size;
-
+/**
+ * Type's doc DTO
+ */
 @Data
 public class TypeDocDto {
-
-    private Integer id;
-
-    @Size(max = 50)
+    /**
+     * name of type's doc
+     */
     private String name;
-
-    @Size(max = 10)
+    /**
+     * code of type's doc
+     */
     private String code;
-
-    public TypeDocDto(Integer id, String name, String code) {
-        this.id = id;
-        this.name = name;
-        this.code = code;
-    }
 }

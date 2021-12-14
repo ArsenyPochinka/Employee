@@ -1,20 +1,17 @@
 package ru.bellintegrator.practice.employee.directory.dto;
 
 import lombok.Data;
-
-import javax.validation.constraints.Size;
-
+/**
+ * Country DTO
+ */
 @Data
 public class CountryDto {
-
-    @Size(max = 50)
+    /**
+     * name of Country
+     */
     private String name;
-
-    @Size(max = 10)
+    /**
+     * code of Country
+     */
     private String code;
-
-    public CountryDto(String name, String code) {
-        this.name = name;
-        this.code = code;
-    }
 }

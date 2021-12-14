@@ -83,7 +83,7 @@ public class OrganizationEntity {
     }
 
     /**
-     * Конструктор
+     * Constructor Organization
      *
      * @param name     name of Organization
      * @param fullName full name of Organization

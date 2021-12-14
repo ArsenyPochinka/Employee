@@ -1,19 +1,19 @@
 package ru.bellintegrator.practice.employee.office.entity;
 
 
-import lombok.Data;
-import ru.bellintegrator.practice.employee.person.entity.PersonEntity;
+import ru.bellintegrator.practice.employee.user.entity.UserEntity;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
- * Office
+ * Office Entity
  */
-@Data
 @Entity(name = "Office")
 public class OfficeEntity {
-
+    /**
+     * Unique office identifier
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -28,58 +28,130 @@ public class OfficeEntity {
     /**
      * Unique organization identifier
      */
-    @Column(name = "organization_id", nullable = false)
-    private Integer organizationId;
+    @Column(name = "org_id", nullable = false)
+    private Integer orgId;
 
     /**
-     * name
+     * name of office
      */
     @Column(name = "name", length = 50)
     private String name;
 
     /**
-     * address
+     * address of office
      */
     @Column(name = "address", length = 50)
     private String address;
 
     /**
-     * phone
+     * phone of office
      */
     @Column(name = "phone", length = 16)
     private String phone;
 
     /**
-     * is active = true / false
+     * Is the organization in operation (is_active = true / false)
      */
     @Column(name = "is_active")
     private Boolean isActive;
-
+    /**
+     * List of office's users
+     */
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @JoinColumn(name = "office_id")
-    private Set<PersonEntity> personEntities;
+    private List<UserEntity> users;
 
-    public OfficeEntity(String name, String address, String phone, Boolean isActive) {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.isActive = isActive;
-    }
-
-    public OfficeEntity(Integer organizationId, String name, String address, String phone, Boolean isActive) {
-        this.organizationId = organizationId;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.isActive = isActive;
-    }
-
-
-
+    /**
+     * Constructor for Hibernate
+     */
     public OfficeEntity() {
 
+    }
+
+    /**
+     * Constructor Office
+     *
+     * @param orgId    unique Organization identifier
+     * @param name     name of Office
+     * @param address  address of Office
+     * @param phone    phone of Office
+     * @param isActive Is the office in operation (is_active = true / false)
+     */
+    public OfficeEntity(Integer orgId, String name, String address, String phone, Boolean isActive) {
+        this.orgId = orgId;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
+    }
+
+    /**
+     * Getter and setter methods
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean active) {
+        isActive = active;
+    }
+
+    public List<UserEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
     }
 }

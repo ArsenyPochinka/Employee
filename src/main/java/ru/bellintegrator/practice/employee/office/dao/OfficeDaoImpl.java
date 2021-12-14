@@ -6,10 +6,7 @@ import ru.bellintegrator.practice.employee.office.entity.OfficeEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 /**
@@ -29,93 +26,52 @@ public class OfficeDaoImpl implements OfficeDao {
      * {@inheritDoc}
      */
     @Override
-    public List<OfficeEntity> all() {
-        TypedQuery<OfficeEntity> query = em.createQuery("SELECT o FROM Office o", OfficeEntity.class);
+    public List<OfficeEntity> list(OfficeEntity filter) {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<OfficeEntity> criteriaQuery = criteriaBuilder.createQuery(OfficeEntity.class);
+        Root<OfficeEntity> organizationRoot = criteriaQuery.from(OfficeEntity.class);
+        Predicate predicate = criteriaBuilder.like(organizationRoot.get("orgId"), "%" + filter.getOrgId() + "%");
+        if (filter.getName() != null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(organizationRoot.get("name"), filter.getName()));
+        }
+        if (filter.getPhone() != null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(organizationRoot.get("phone"), filter.getPhone()));
+        }
+        if (filter.getIsActive()!= null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(organizationRoot.get("isActive"), filter.getIsActive()));
+        }
+        criteriaQuery.select(organizationRoot).where(predicate);
+        TypedQuery<OfficeEntity> query = em.createQuery(criteriaQuery);
         return query.getResultList();
     }
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public OfficeEntity loadById(Integer id) {
+    public OfficeEntity getById(Integer id) {
         return em.find(OfficeEntity.class, id);
     }
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<OfficeEntity> loadByParams(Integer organizationId, String name, String phone, Boolean isActive) {
-        CriteriaQuery<OfficeEntity> criteria = buildCriteriaQuery(organizationId, name, phone, isActive);
-        TypedQuery<OfficeEntity> query = em.createQuery(criteria);
-        return query.getResultList();
+    public void update(OfficeEntity updateOffice) {
+        OfficeEntity office = getById(updateOffice.getId());
+        office.setName(updateOffice.getName());
+        office.setAddress(updateOffice.getAddress());
+        if(updateOffice.getPhone() != null) {
+            office.setPhone(updateOffice.getPhone());
+        }
+        if(updateOffice.getIsActive() != null) {
+            office.setIsActive(updateOffice.getIsActive());
+        }
+        em.flush();
     }
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(OfficeEntity officeEntity) {
-        em.persist(officeEntity);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(OfficeEntity officeEntity) {
-        em.createQuery(buildCriteriaUpdate(officeEntity)).executeUpdate();
-    }
-
-    private CriteriaQuery<OfficeEntity> buildCriteriaQuery(Integer organizationId, String name, String phone, Boolean isActive) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<OfficeEntity> criteriaQuery = builder.createQuery(OfficeEntity.class);
-
-        Root<OfficeEntity> root = criteriaQuery.from(OfficeEntity.class);
-
-        if(name != null && phone != null && isActive != null) {
-            criteriaQuery.where(root.get("organizationId").in(organizationId), root.get("name").in(name), root.get("phone").in(phone), root.get("isActive").in(isActive));
-        }
-        if(name != null && phone != null && isActive == null) {
-            criteriaQuery.where(root.get("organizationId").in(organizationId), root.get("name").in(name), root.get("phone").in(phone));
-        }
-        if(name != null && phone == null && isActive != null) {
-            criteriaQuery.where(root.get("organizationId").in(organizationId), root.get("name").in(name), root.get("isActive").in(isActive));
-        }
-        if( name != null && phone == null && isActive == null) {
-            criteriaQuery.where(root.get("organizationId").in(organizationId), root.get("name").in(name));
-        }
-        if(name == null && phone != null && isActive != null) {
-            criteriaQuery.where(root.get("organizationId").in(organizationId), root.get("phone").in(phone), root.get("isActive").in(isActive));
-        }
-        if(name == null && phone != null && isActive == null) {
-            criteriaQuery.where(root.get("organizationId").in(organizationId), root.get("phone").in(phone));
-        }
-        if(name == null && phone == null && isActive != null) {
-            criteriaQuery.where(root.get("organizationId").in(organizationId), root.get("isActive").in(isActive));
-        }
-        if( name == null && phone == null && isActive == null) {
-            criteriaQuery.where(root.get("organizationId").in(organizationId));
-        }
-
-        return criteriaQuery;
-    }
-
-    private CriteriaUpdate<OfficeEntity> buildCriteriaUpdate(OfficeEntity officeEntity) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaUpdate<OfficeEntity> criteriaUpdate = builder.createCriteriaUpdate(OfficeEntity.class);
-        Root<OfficeEntity> root = criteriaUpdate.from(OfficeEntity.class);
-        criteriaUpdate.set("name", officeEntity.getName());
-        criteriaUpdate.set("address", officeEntity.getAddress());
-        if(officeEntity.getPhone() != null) {
-            criteriaUpdate.set("phone", officeEntity.getPhone());
-        }
-        if(officeEntity.getIsActive() != null) {
-            criteriaUpdate.set("isActive", officeEntity.getIsActive());
-        }
-        criteriaUpdate.where(builder.equal(root.get("id"), officeEntity.getId()));
-
-        return criteriaUpdate;
+    public void save(OfficeEntity newOffice) {
+        em.persist(newOffice);
     }
 }

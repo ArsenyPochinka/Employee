@@ -2,14 +2,11 @@ package ru.bellintegrator.practice.employee.directory.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.employee.directory.entity.CountryEntity;
 import ru.bellintegrator.practice.employee.directory.entity.TypeDocEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 /**
  * {@inheritDoc}
@@ -27,34 +24,48 @@ public class TypeDocDaoImpl implements TypeDocDao {
      * {@inheritDoc}
      */
     @Override
-    public List<TypeDocEntity> loadByParams(String name, String code) {
-        CriteriaQuery<TypeDocEntity> criteria = buildCriteriaQuery(name, code);
-        TypedQuery<TypeDocEntity> query = em.createQuery(criteria);
+    public List<TypeDocEntity> list() {
+        TypedQuery<TypeDocEntity> query = em.createQuery("SELECT t FROM Type_Doc t", TypeDocEntity.class);
         return query.getResultList();
     }
 
-    private CriteriaQuery<TypeDocEntity> buildCriteriaQuery(String name, String code) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<TypeDocEntity> criteriaQuery = builder.createQuery(TypeDocEntity.class);
-
-        Root<TypeDocEntity> root = criteriaQuery.from(TypeDocEntity.class);
-
-        if(name != null && code != null) {
-            criteriaQuery.where(root.get("name").in(name), root.get("code").in(code));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TypeDocEntity getByName(String name) {
+        TypedQuery<TypeDocEntity> query = em.createQuery("SELECT t FROM Type_Doc t WHERE t.name = :name", TypeDocEntity.class);
+        query.setParameter("name", name);
+        TypeDocEntity typeDoc;
+        try {
+            typeDoc = query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
-        if(name != null && code == null) {
-            criteriaQuery.where(root.get("name").in(name));
-        }
-        if(name == null && code != null) {
-            criteriaQuery.where(root.get("code").in(code));
-        }
-        return criteriaQuery;
+        return typeDoc;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(TypeDocEntity typeDocEntity) {
-        em.persist(typeDocEntity);
+    public TypeDocEntity getByNameAndCode(String name, String code) {
+        TypedQuery<TypeDocEntity> query = em.createQuery("SELECT t FROM Type_Doc t WHERE t.code = :code AND t.name = :name", TypeDocEntity.class);
+        query.setParameter("name", name);
+        query.setParameter("code", code);
+        TypeDocEntity typeDoc;
+        try {
+            typeDoc = query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return typeDoc;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TypeDocEntity save(TypeDocEntity newTypeDoc) {
+        em.persist(newTypeDoc);
+        return newTypeDoc;
     }
 }

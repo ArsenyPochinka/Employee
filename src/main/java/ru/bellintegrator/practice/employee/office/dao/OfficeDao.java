@@ -9,39 +9,33 @@ import java.util.List;
  */
 public interface OfficeDao {
     /**
-     * Get all Offices
+     * Returns a filtered list of offices
      *
-     * @return List<OfficeEntity>
+     * @param filter (object with filtering data)
+     * @return filtered list of offices
      */
-    List<OfficeEntity> all();
+    List<OfficeEntity> list(OfficeEntity filter);
 
     /**
-     * Get Office by id
+     * Returns the office with the specified ID
      *
-     * @param id
-     * @return OfficeEntity
+     * @param id (organization id)
+     * @return organization with the specified id
      */
-    OfficeEntity loadById(Integer id);
+    OfficeEntity getById(Integer id);
 
     /**
-     * Get Offices with specific attributes (organizationId, name, phone, isActive)
+     * Updates information about the office
      *
-     * @param organizationId, name, phone, isActive
-     * @return List<OfficeEntity>
+     * @param updateOffice (object with new office data)
      */
-    List<OfficeEntity> loadByParams(Integer organizationId, String name, String phone, Boolean isActive);
+    void update(OfficeEntity updateOffice);
 
     /**
-     * Update Office
+     * Saves information about the new office
      *
-     * @param officeEntity ;
+     * @param newOffice (object with data about the new office)
      */
-    void update(OfficeEntity officeEntity);
-
-    /**
-     * Save new Office
-     *
-     * @param officeEntity
-     */
-    void save(OfficeEntity officeEntity);
+    void save(OfficeEntity newOffice);
 }
+

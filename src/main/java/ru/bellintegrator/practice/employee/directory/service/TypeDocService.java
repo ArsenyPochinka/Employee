@@ -5,15 +5,13 @@ import ru.bellintegrator.practice.employee.directory.dto.TypeDocDto;
 import java.util.List;
 
 /**
- * Service
+ * Service for type's doc
  */
 public interface TypeDocService {
-
     /**
-     * Get Guides of Doc by specific attributes (name, code)
+     * Returns a list of type's doc
      *
-     * @param typeDocDto
-     * @return List<CountryDto>
+     * @return list of type's doc
      */
-    List<TypeDocDto> getByParams(TypeDocDto typeDocDto);
+    List<TypeDocDto> list();
 }

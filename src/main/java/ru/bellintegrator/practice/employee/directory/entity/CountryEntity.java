@@ -1,16 +1,15 @@
 package ru.bellintegrator.practice.employee.directory.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 /**
- * Country
+ * Country Entity
  */
-@Data
 @Entity(name = "Country")
 public class CountryEntity {
-
+    /**
+     * Unique country identifier
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,27 +22,56 @@ public class CountryEntity {
     private Integer version;
 
     /**
-     * name
+     * name of country
      */
     @Column(name = "name", length = 50)
     private String name;
 
     /**
-     * code
+     * code of country
      */
     @Column(name = "code", length = 10)
     private String code;
+    /**
+     * Constructor for Hibernate
+     */
+    public CountryEntity() {
 
-    public CountryEntity(String code) {
-        this.code = code;
     }
-
+    /**
+     * Constructor Country
+     *
+     * @param name         name's country
+     * @param code         code's country
+     */
     public CountryEntity(String name, String code) {
         this.name = name;
         this.code = code;
     }
+    /**
+     * Getter and setter methods
+     */
+    public Integer getId() {
+        return id;
+    }
 
-    public CountryEntity() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

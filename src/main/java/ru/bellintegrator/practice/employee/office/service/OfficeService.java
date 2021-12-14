@@ -1,49 +1,41 @@
 package ru.bellintegrator.practice.employee.office.service;
 
-import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.employee.office.dto.OfficeWithIdDto;
-import ru.bellintegrator.practice.employee.office.dto.OfficeWithOrgIdDto;
-import ru.bellintegrator.practice.employee.office.dto.ResponseParamsOfficeDto;
-import ru.bellintegrator.practice.employee.office.dto.RequestParamsOfficeDto;
+import ru.bellintegrator.practice.employee.office.dto.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * Service
+ * An interface that provides methods for working with offices
  */
-@Validated
 public interface OfficeService {
 
     /**
-     * Get Offices with specific attributes (id, name, isActive)
-     * by parameters organizationId, name, phone, isActive
+     * Returns a filtered list of offices
      *
-     * @param requestParamsOfficeDto
-     * @return List<ResponseParamsOfficeDto>
+     * @param filter (filter for the list)
+     * @return filtered list
      */
-    List<ResponseParamsOfficeDto> getByParams(@Valid RequestParamsOfficeDto requestParamsOfficeDto);
+    List<OfficeFilterResponseDto> list(OfficeFilterRequestDto filter);
 
     /**
-     * Get Office by id
+     * Returns the office with the specified ID
      *
-     * @param id
-     * @return OfficeWithIdDto
+     * @param id (office id)
+     * @return the office with the specified id
      */
-    OfficeWithIdDto getById(@NotNull Integer id);
+    OfficeDto getById(Integer id);
 
     /**
-     * update Office by id
+     * Updates information about the office
      *
-     * @param officeWithIdDto
+     * @param updateOffice (object containing information to update)
      */
-    void update(@Valid OfficeWithIdDto officeWithIdDto);
+    void update(OfficeUpdateDto updateOffice);
 
     /**
-     * add new Office in DB
+     * Saves information about the new office
      *
-     * @param officeWithOrgIdDto
+     * @param newOffice (an object containing information about the new office)
      */
-    void add(@Valid OfficeWithOrgIdDto officeWithOrgIdDto);
+    void save(OfficeSaveDto newOffice);
 }

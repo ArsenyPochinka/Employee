@@ -70,7 +70,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
      * {@inheritDoc}
      */
     @Override
-    public void save(OrganizationEntity organizationEntity) {
-        em.persist(organizationEntity);
+    public void save(OrganizationEntity newOrganization) {
+        em.persist(newOrganization);
     }
 }

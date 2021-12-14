@@ -5,11 +5,8 @@ import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.employee.directory.entity.CountryEntity;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -25,9 +22,12 @@ public class CountryDaoImpl implements CountryDao {
         this.em = em;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<CountryEntity> all() {
-        Query query = em.createNativeQuery("SELECT c.* FROM Country c", CountryEntity.class);
+    public List<CountryEntity> list() {
+        TypedQuery<CountryEntity> query = em.createQuery("SELECT c FROM Country c", CountryEntity.class);
         return query.getResultList();
     }
 
@@ -35,53 +35,23 @@ public class CountryDaoImpl implements CountryDao {
      * {@inheritDoc}
      */
     @Override
-    public List<CountryEntity> loadByParams(String name, String code) {
-        CriteriaQuery<CountryEntity> criteria = buildCriteriaQuery(name, code);
-        TypedQuery<CountryEntity> query = em.createQuery(criteria);
-        return query.getResultList();
+    public CountryEntity getByCode(String code) {
+        TypedQuery<CountryEntity> query = em.createQuery("SELECT c FROM Country c WHERE c.code = :code", CountryEntity.class);
+        query.setParameter("code", code);
+        CountryEntity country;
+        try {
+            country = query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return country;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<CountryEntity> loadByCode(String code) {
-        CriteriaQuery<CountryEntity> criteria = buildCriteriaQuery(code);
-        TypedQuery<CountryEntity> query = em.createQuery(criteria);
-        return query.getResultList();
-    }
-
-    private CriteriaQuery<CountryEntity> buildCriteriaQuery(String name, String code) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<CountryEntity> criteriaQuery = builder.createQuery(CountryEntity.class);
-
-        Root<CountryEntity> root = criteriaQuery.from(CountryEntity.class);
-
-        if(name != null && code != null) {
-            criteriaQuery.where(root.get("name").in(name), root.get("code").in(code));
-        }
-        if(name != null && code == null) {
-            criteriaQuery.where(root.get("name").in(name));
-        }
-        if(name == null && code != null) {
-            criteriaQuery.where(root.get("code").in(code));
-        }
-        return criteriaQuery;
-    }
-
-    private CriteriaQuery<CountryEntity> buildCriteriaQuery(String code) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<CountryEntity> criteriaQuery = builder.createQuery(CountryEntity.class);
-
-        Root<CountryEntity> root = criteriaQuery.from(CountryEntity.class);
-
-        criteriaQuery.where(root.get("code").in(code));
-        return criteriaQuery;
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void save(CountryEntity countryEntity) {
-        em.persist(countryEntity);
+    public CountryEntity save(CountryEntity newCountry) {
+        em.persist(newCountry);
+        return newCountry;
     }
 }

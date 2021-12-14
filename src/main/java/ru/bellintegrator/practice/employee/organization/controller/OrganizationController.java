@@ -35,7 +35,7 @@ public class OrganizationController {
      * @param filter (filter for the list)
      * @return filtered list
      */
-    @ApiOperation(value = "Get organization list by filter", nickname = "getOrganizationListById", httpMethod = "POST")
+    @ApiOperation(value = "Get organization's list by filter", nickname = "getOrganizationListById", httpMethod = "POST")
     @PostMapping("/list")
     public List<OrganizationFilterResponseDto> list(@RequestBody OrganizationFilterRequestDto filter) {
         return organizationService.list(filter);

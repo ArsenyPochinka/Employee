@@ -5,15 +5,13 @@ import ru.bellintegrator.practice.employee.directory.dto.CountryDto;
 import java.util.List;
 
 /**
- * Service
+ * Service for country
  */
 public interface CountryService {
-
     /**
-     * Get all Guides of Country
+     * Returns a list of countries and their codes
      *
-     * @param
-     * @return List<CountryDto>
+     * @return list of countries and their codes
      */
-    List<CountryDto> all();
+    List<CountryDto> list();
 }
