@@ -51,7 +51,7 @@ public class UserDaoImpl implements UserDao {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(userRoot.get("middleName"), filter.getMiddleName()));
         }
         if (filter.getPosition() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(userRoot.get("phone"), filter.getPosition()));
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(userRoot.get("position"), filter.getPosition()));
         }
         if (filter.getDoc() != null && filter.getDoc().getTypeDoc().getCode() != null) {
             predicate = criteriaBuilder.equal(userRoot.get("doc").get("typeDoc").get("code"), filter.getDoc().getTypeDoc().getCode());

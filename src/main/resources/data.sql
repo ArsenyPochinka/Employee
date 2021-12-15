@@ -17,15 +17,15 @@ INSERT INTO Country (version, name, code) VALUES (0, 'Russian Federation', '643'
 INSERT INTO Country (version, name, code) VALUES (0, 'Ukraine', '254');
 INSERT INTO Country (version, name, code) VALUES (0, 'Belarus', '512');
 
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 1, 'Kirsenko', 'Konstantin', 'manager', '+7(955)345-23-55', 'true', 1);
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 1, 'Pochinka', 'Arseny', 'provider', '+7(912)345-23-56', 'true', 1);
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 2, 'Khafizov', 'Timur', 'doctor', '+7(912)345-23-12', 'true', 2);
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 3, 'Usachev', 'Ilia', 'manager', '+7(954)345-23-67', 'true', 2);
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 4, 'Mahov', 'Dmitriy', 'provider', '+7(942)345-23-43', 'true', 3);
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 5, 'Fedorov', 'Victor', 'doctor', '+7(932)347-22-51', 'true', 3);
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 6, 'Kirov', 'Kirill', 'manager', '+7(953)345-23-48', 'true', 1);
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 6, 'Firsov', 'Konstantin', 'provider', '+7(942)345-23-42', 'true', 1);
-INSERT INTO "User" (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 6, 'Nikulin', 'Vasiliy', 'doctor', '+7(965)345-23-32', 'false', 1);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 1, 'Kirsenko', 'Konstantin', 'manager', '+7(955)345-23-55', 'true', 1);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 1, 'Pochinka', 'Arseny', 'provider', '+7(912)345-23-56', 'true', 1);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 2, 'Khafizov', 'Timur', 'doctor', '+7(912)345-23-12', 'true', 2);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 3, 'Usachev', 'Ilia', 'manager', '+7(954)345-23-67', 'true', 2);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 4, 'Mahov', 'Dmitriy', 'provider', '+7(942)345-23-43', 'true', 3);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 5, 'Fedorov', 'Victor', 'doctor', '+7(932)347-22-51', 'true', 3);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 6, 'Kirov', 'Kirill', 'manager', '+7(953)345-23-48', 'true', 1);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 6, 'Firsov', 'Konstantin', 'provider', '+7(942)345-23-42', 'true', 1);
+INSERT INTO Users (version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (0, 6, 'Nikulin', 'Vasiliy', 'doctor', '+7(965)345-23-32', 'false', 1);
 
 INSERT INTO Doc (user_id, version, doc_type_id, doc_number, doc_date) VALUES (1, 0, 1, '45 12 342342', '2012-12-24');
 INSERT INTO Doc (user_id, version, doc_type_id, doc_number, doc_date) VALUES (2, 0, 1, '46 19 442343', '2002-12-03');

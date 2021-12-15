@@ -40,7 +40,7 @@ COMMENT ON COLUMN Office.address IS 'address of office';
 COMMENT ON COLUMN Office.phone IS 'phone of office';
 COMMENT ON COLUMN Office.is_active IS 'Is the office in operation (is_active = true / false)';
 
-CREATE TABLE IF NOT EXISTS "User" (
+CREATE TABLE IF NOT EXISTS Users (
                                       id            SERIAL PRIMARY KEY,
                                       version       INTEGER NOT NULL,
                                       office_id     INTEGER NOT NULL,
@@ -53,16 +53,17 @@ CREATE TABLE IF NOT EXISTS "User" (
                                       country_id    INTEGER
     );
 
-COMMENT ON TABLE "User" IS 'User of office';
-COMMENT ON COLUMN "User".id IS 'Unique user identifier';
-COMMENT ON COLUMN "User".version IS 'Service field hibernate';
-COMMENT ON COLUMN "User".office_id IS 'Unique office identifier';
-COMMENT ON COLUMN "User".first_name IS 'firstname of user';
-COMMENT ON COLUMN "User".last_name IS 'last name  of user';
-COMMENT ON COLUMN "User".middle_name IS 'middle name  of user';
-COMMENT ON COLUMN "User".position Is 'position in office of user';
-COMMENT ON COLUMN "User".phone IS 'phone  of user';
-COMMENT ON COLUMN "User".is_identified IS 'Is the user authorized (is_active = true / false)';
+COMMENT ON TABLE Users IS 'User of office';
+COMMENT ON COLUMN Users.id IS 'Unique user identifier';
+COMMENT ON COLUMN Users.version IS 'Service field hibernate';
+COMMENT ON COLUMN Users.office_id IS 'Unique office identifier';
+COMMENT ON COLUMN Users.first_name IS 'firstname of user';
+COMMENT ON COLUMN Users.last_name IS 'last name  of user';
+COMMENT ON COLUMN Users.middle_name IS 'middle name  of user';
+COMMENT ON COLUMN Users.position Is 'position in office of user';
+COMMENT ON COLUMN Users.phone IS 'phone  of user';
+COMMENT ON COLUMN Users.is_identified IS 'Is the user authorized (is_active = true / false)';
+COMMENT ON COLUMN Users.country_id IS 'Unique country identifier';
 
 CREATE TABLE IF NOT EXISTS Doc (
                                    user_id     INTEGER NOT NULL PRIMARY KEY,
@@ -107,11 +108,11 @@ COMMENT ON COLUMN Country.code IS 'code of country';
 
 ALTER TABLE Office ADD FOREIGN KEY (org_id) REFERENCES Organization(id);
 
-ALTER TABLE "User" ADD FOREIGN KEY (office_id) REFERENCES Office(id);
+ALTER TABLE Users ADD FOREIGN KEY (office_id) REFERENCES Office(id);
 
-ALTER TABLE "User" ADD FOREIGN KEY (country_id) REFERENCES Country(id);
+ALTER TABLE Users ADD FOREIGN KEY (country_id) REFERENCES Country(id);
 
-ALTER TABLE Doc ADD FOREIGN KEY (user_id) REFERENCES "User"(id);
+ALTER TABLE Doc ADD FOREIGN KEY (user_id) REFERENCES Users(id);
 
 ALTER TABLE Doc ADD FOREIGN KEY (doc_type_id) REFERENCES Type_Doc(id);
 

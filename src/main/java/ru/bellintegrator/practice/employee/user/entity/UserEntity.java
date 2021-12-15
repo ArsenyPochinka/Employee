@@ -7,7 +7,7 @@ import javax.persistence.*;
 /**
  * User Entity
  */
-@Entity(name = "User")
+@Entity(name = "Users")
 public class UserEntity {
     /**
      * Unique user identifier

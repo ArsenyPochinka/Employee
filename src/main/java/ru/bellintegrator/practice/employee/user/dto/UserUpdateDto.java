@@ -16,7 +16,7 @@ public class UserUpdateDto {
     /**
      * Unique office identifier
      */
-    private Integer officeIid;
+    private Integer officeId;
     /**
      * firstname of User
      */

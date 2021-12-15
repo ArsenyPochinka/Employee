@@ -194,12 +194,12 @@ public class UserServiceImpl implements UserService {
         return matcher.matches();
     }
     private boolean isNumberValid(String number) {
-        Pattern regex = Pattern.compile("[0-9]{12}");
+        Pattern regex = Pattern.compile("[0-9]{1,12}");
         Matcher matcher = regex.matcher(number);
         return matcher.matches();
     }
     private boolean isCodeValid(String code) {
-        Pattern regex = Pattern.compile("[0-9]{10}");
+        Pattern regex = Pattern.compile("[0-9]{1,10}");
         Matcher matcher = regex.matcher(code);
         return matcher.matches();
     }
