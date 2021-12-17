@@ -50,8 +50,7 @@ public class CountryDaoImpl implements CountryDao {
      * {@inheritDoc}
      */
     @Override
-    public CountryEntity save(CountryEntity newCountry) {
+    public void save(CountryEntity newCountry) {
         em.persist(newCountry);
-        return newCountry;
     }
 }

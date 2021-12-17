@@ -34,7 +34,6 @@ public interface TypeDocDao {
      * Save new TypeDoc
      *
      * @param newTypeDoc (object with data about the new type of doc)
-     * @return new doc's type
      */
-    TypeDocEntity save(TypeDocEntity newTypeDoc);
+    void save(TypeDocEntity newTypeDoc);
 }

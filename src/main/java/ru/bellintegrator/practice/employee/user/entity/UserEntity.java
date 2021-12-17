@@ -69,12 +69,9 @@ public class UserEntity {
      * Doc's user
      */
     @OneToOne(
-            mappedBy = "user",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            optional = false
+            mappedBy = "user"
+
     )
-    @PrimaryKeyJoinColumn
     private DocEntity doc;
     /**
      * Doc's country
@@ -88,30 +85,6 @@ public class UserEntity {
      */
     public UserEntity() {
 
-    }
-    /**
-     * Constructor User
-     *
-     * @param officeId     unique Organization identifier
-     * @param firstName    firstname of User
-     * @param lastName     last name of User
-     * @param middleName   middle name of User
-     * @param position     position of User
-     * @param phone        phone of User
-     * @param isIdentified Is the user identified (identified = true / false)
-     * @param doc          document of User
-     * @param country      country of User
-     */
-    public UserEntity(Integer officeId, String firstName, String lastName, String middleName, String position, String phone, Boolean isIdentified, DocEntity doc, CountryEntity country) {
-        this.officeId = officeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.middleName = middleName;
-        this.position = position;
-        this.phone = phone;
-        this.isIdentified = isIdentified;
-        this.doc = doc;
-        this.country = country;
     }
 
     /**
@@ -181,11 +154,11 @@ public class UserEntity {
         this.phone = phone;
     }
 
-    public Boolean getIdentified() {
+    public Boolean getIsIdentified() {
         return isIdentified;
     }
 
-    public void setIdentified(Boolean identified) {
+    public void setIsIdentified(Boolean identified) {
         isIdentified = identified;
     }
 

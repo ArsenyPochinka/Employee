@@ -132,36 +132,54 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     private boolean isNameValid(String name) {
         Pattern regex = Pattern.compile("[a-zA-Zа-яА-Я\"\\s-]{1,50}");
+        if(name == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(name);
         return matcher.matches();
     }
 
     private boolean isFullNameValid(String fullName) {
         Pattern regex = Pattern.compile("[a-zA-Zа-яА-Я\"\\s,.-]{1,50}");
+        if(fullName == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(fullName);
         return matcher.matches();
     }
 
     private boolean isInnValid(String inn) {
         Pattern regex = Pattern.compile("[0-9]{12}");
+        if(inn == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(inn);
         return matcher.matches();
     }
 
     private boolean isKppValid(String kpp) {
         Pattern regex = Pattern.compile("[0-9]{9}");
+        if(kpp == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(kpp);
         return matcher.matches();
     }
 
     private boolean isAddressValid(String address) {
         Pattern regex = Pattern.compile("[a-zA-Zа-яА-Я0-9\"\\s,.-]{1,50}");
+        if(address == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(address);
         return matcher.matches();
     }
 
     private boolean isPhoneValid(String phone) {
         Pattern regex = Pattern.compile("^(\\s*)?(\\+)?([- _():=+]?\\d[- _():=+]?){10,14}(\\s*)?$");
+        if(phone == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(phone);
         return matcher.matches();
     }

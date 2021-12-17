@@ -38,8 +38,10 @@ public class DocEntity {
     /**
      * User's doc
      */
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "user_id")
     private UserEntity user;
     /**
@@ -58,7 +60,8 @@ public class DocEntity {
     /**
      * Constructor Doc
      *
-     * @param id           unique user and doc's user identifier
+     * @param id unique user's identification
+     * @param docNumber    unique doc's number
      * @param docDate      date of doc
      * @param typeDoc      type of doc
      */

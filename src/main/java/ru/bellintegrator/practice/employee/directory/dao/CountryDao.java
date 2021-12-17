@@ -27,7 +27,6 @@ public interface CountryDao {
      * Save new Country
      *
      * @param newCountry (object with data about the new country)
-     * @return new country
      */
-    CountryEntity save(CountryEntity newCountry);
+    void save(CountryEntity newCountry);
 }

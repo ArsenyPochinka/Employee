@@ -6,11 +6,14 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.practice.employee.directory.dao.CountryDao;
+import ru.bellintegrator.practice.employee.directory.dao.TypeDocDao;
 import ru.bellintegrator.practice.employee.directory.entity.CountryEntity;
 import ru.bellintegrator.practice.employee.directory.entity.TypeDocEntity;
 import ru.bellintegrator.practice.employee.exception.RecordNotFoundException;
 import ru.bellintegrator.practice.employee.exception.WrongRequestException;
 import ru.bellintegrator.practice.employee.office.dao.OfficeDao;
+import ru.bellintegrator.practice.employee.user.dao.DocDao;
 import ru.bellintegrator.practice.employee.user.dto.*;
 import ru.bellintegrator.practice.employee.user.dao.UserDao;
 import ru.bellintegrator.practice.employee.user.entity.DocEntity;
@@ -27,11 +30,17 @@ import java.util.regex.Pattern;
 public class UserServiceImpl implements UserService {
     private final UserDao dao;
     private final OfficeDao officeDao;
+    private final TypeDocDao typeDocDao;
+    private final CountryDao countryDao;
+    private final DocDao docDao;
 
     @Autowired
-    public UserServiceImpl(UserDao dao, OfficeDao officeDao) {
+    public UserServiceImpl(UserDao dao, OfficeDao officeDao, TypeDocDao typeDocDao, CountryDao countryDao, DocDao docDao) {
         this.dao = dao;
         this.officeDao = officeDao;
+        this.typeDocDao = typeDocDao;
+        this.countryDao = countryDao;
+        this.docDao = docDao;
     }
 
     /**
@@ -97,14 +106,31 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      */
-    @Override
     @Transactional
+    @Override
     public void save(UserSaveDto saveUser) {
         if (saveUser == null) {
             throw new WrongRequestException("Empty input data.");
         }
         validateSave(saveUser);
-        dao.save(mapUserEntityFromSaveDto(saveUser));
+        UserEntity user = mapUserEntityFromSaveDto(saveUser);
+
+        dao.save(user);
+
+        TypeDocEntity typeDoc = new TypeDocEntity();
+
+        if(saveUser.getDocName() != null || saveUser.getDocCode() != null) {
+            if (typeDocDao.getByNameAndCode(saveUser.getDocName(), saveUser.getDocCode()) != null) {
+                typeDoc = typeDocDao.getByNameAndCode(saveUser.getDocName(), saveUser.getDocCode());
+            } else {
+                typeDoc.setName(saveUser.getDocName());
+                typeDoc.setCode(saveUser.getDocCode());
+                typeDocDao.save(typeDoc);
+            }
+        }
+
+        docDao.save(new DocEntity(user.getId(), saveUser.getDocNumber(), saveUser.getDocDate(), typeDoc));
+
     }
 
     private List<UserFilterResponseDto> mapUserFilterList(List<UserEntity> entities) {
@@ -134,20 +160,41 @@ public class UserServiceImpl implements UserService {
     private UserEntity mapUserEntityFromUpdateDto(UserUpdateDto dto) {
 
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-        mapperFactory.classMap(UserUpdateDto.class, UserEntity.class).exclude("doc").exclude("country").mapNulls(false).byDefault().register();
+        mapperFactory.classMap(UserUpdateDto.class, UserEntity.class).exclude("docName").exclude("docNumber").exclude("docDate").exclude("citizenshipCode").mapNulls(false).byDefault().register();
         MapperFacade mapperFacade = mapperFactory.getMapperFacade();
 
         UserEntity entity = mapperFacade.map(dto, UserEntity.class);
-        DocEntity doc = new DocEntity();
+
+        DocEntity doc = dao.getById(dto.getId()).getDoc();
+
         TypeDocEntity typeDoc = new TypeDocEntity();
-        typeDoc.setName(entity.getDoc().getTypeDoc().getName());
-        doc.setTypeDoc(typeDoc);
-        doc.setDocNumber(entity.getDoc().getDocNumber());
-        doc.setDocDate(entity.getDoc().getDocDate());
-        entity.setDoc(doc);
 
         CountryEntity country = new CountryEntity();
-        country.setCode(dto.getCitizenshipCode());
+
+        if(dto.getDocNumber() != null) {
+            doc.setDocNumber(dto.getDocNumber());
+        }
+        if(dto.getDocDate() != null) {
+            doc.setDocDate(dto.getDocDate());
+        }
+        if(dto.getDocName() != null) {
+            if (typeDocDao.getByName(dto.getDocName()) != null) {
+                doc.setTypeDoc(typeDocDao.getByName(dto.getDocName()));
+            } else {
+                typeDoc.setName(dto.getDocName());
+                typeDocDao.save(typeDoc);
+                doc.setTypeDoc(typeDoc);
+            }
+        }
+        entity.setDoc(doc);
+        if(dto.getCitizenshipCode() != null) {
+            if (countryDao.getByCode(dto.getCitizenshipCode()) != null) {
+                country = countryDao.getByCode(dto.getCitizenshipCode());
+            } else {
+                country.setCode(dto.getCitizenshipCode());
+                countryDao.save(country);
+            }
+        }
         entity.setCountry(country);
 
         return entity;
@@ -156,21 +203,21 @@ public class UserServiceImpl implements UserService {
     private UserEntity mapUserEntityFromSaveDto(UserSaveDto dto) {
 
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-        mapperFactory.classMap(UserUpdateDto.class, UserEntity.class).exclude("doc").exclude("country").mapNulls(false).byDefault().register();
+        mapperFactory.classMap(UserUpdateDto.class, UserEntity.class).exclude("docName").exclude("docCode").exclude("docNumber").exclude("docDate").exclude("citizenshipCode").mapNulls(false).byDefault().register();
         MapperFacade mapperFacade = mapperFactory.getMapperFacade();
 
         UserEntity entity = mapperFacade.map(dto, UserEntity.class);
-        DocEntity doc = new DocEntity();
-        TypeDocEntity typeDoc = new TypeDocEntity();
-        typeDoc.setName(entity.getDoc().getTypeDoc().getName());
-        typeDoc.setCode(entity.getDoc().getTypeDoc().getCode());
-        doc.setTypeDoc(typeDoc);
-        doc.setDocNumber(entity.getDoc().getDocNumber());
-        doc.setDocDate(entity.getDoc().getDocDate());
-        entity.setDoc(doc);
 
         CountryEntity country = new CountryEntity();
-        country.setCode(dto.getCitizenshipCode());
+
+        if(dto.getCitizenshipCode() != null) {
+            if (countryDao.getByCode(dto.getCitizenshipCode()) != null) {
+                country = countryDao.getByCode(dto.getCitizenshipCode());
+            } else {
+                country.setCode(dto.getCitizenshipCode());
+                countryDao.save(country);
+            }
+        }
         entity.setCountry(country);
 
         return entity;
@@ -184,22 +231,34 @@ public class UserServiceImpl implements UserService {
 
     private boolean isNameAndPositionValid(String name) {
         Pattern regex = Pattern.compile("[a-zA-Zа-яА-Я\"\\s-]{1,50}");
+        if(name == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(name);
         return matcher.matches();
     }
 
     private boolean isPhoneValid(String phone) {
         Pattern regex = Pattern.compile("^(\\s*)?(\\+)?([- _():=+]?\\d[- _():=+]?){10,14}(\\s*)?$");
+        if(phone == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(phone);
         return matcher.matches();
     }
     private boolean isNumberValid(String number) {
-        Pattern regex = Pattern.compile("[0-9]{1,12}");
+        Pattern regex = Pattern.compile("[0-9\\s]{1,12}");
+        if(number == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(number);
         return matcher.matches();
     }
     private boolean isCodeValid(String code) {
         Pattern regex = Pattern.compile("[0-9]{1,10}");
+        if(code == null) {
+            return true;
+        }
         Matcher matcher = regex.matcher(code);
         return matcher.matches();
     }
@@ -237,7 +296,7 @@ public class UserServiceImpl implements UserService {
             throw new WrongRequestException(message.toString().trim());
         }
         if (dao.getById(updateUser.getId()) == null) {
-            throw new RecordNotFoundException("Record with ID " + updateUser.getId() + " wasn't found. ");
+            throw new RecordNotFoundException("Record with ID (" + updateUser.getId() + ") wasn't found. ");
         }
     }
 
@@ -247,7 +306,7 @@ public class UserServiceImpl implements UserService {
             message.append("Field officeID is null. ");
         }
         if (officeDao.getById(saveUser.getOfficeId()) == null) {
-            throw new RecordNotFoundException("Office with ID " + saveUser.getOfficeId() + " wasn't found. ");
+            throw new RecordNotFoundException("Office with ID (" + saveUser.getOfficeId() + ") wasn't found. ");
         }
         if (saveUser.getFirstName() == null || !isNameAndPositionValid(saveUser.getFirstName())) {
             message.append("Field FIRSTNAME is null or invalid. ");

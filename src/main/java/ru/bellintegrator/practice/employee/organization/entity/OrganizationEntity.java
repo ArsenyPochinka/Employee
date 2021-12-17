@@ -83,27 +83,6 @@ public class OrganizationEntity {
     }
 
     /**
-     * Constructor Organization
-     *
-     * @param name     name of Organization
-     * @param fullName full name of Organization
-     * @param inn      inn of Organization
-     * @param kpp      kpp of Organization
-     * @param address  address of Organization
-     * @param phone    phone of Organization
-     * @param isActive Is the organization in operation (is_active = true / false)
-     */
-    public OrganizationEntity(String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
-        this.name = name;
-        this.fullName = fullName;
-        this.inn = inn;
-        this.kpp = kpp;
-        this.address = address;
-        this.phone = phone;
-        this.isActive = isActive;
-    }
-
-    /**
      * Getter and setter methods
      */
 

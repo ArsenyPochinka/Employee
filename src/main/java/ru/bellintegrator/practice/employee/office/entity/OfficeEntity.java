@@ -70,24 +70,6 @@ public class OfficeEntity {
     public OfficeEntity() {
 
     }
-
-    /**
-     * Constructor Office
-     *
-     * @param orgId    unique Organization identifier
-     * @param name     name of Office
-     * @param address  address of Office
-     * @param phone    phone of Office
-     * @param isActive Is the office in operation (is_active = true / false)
-     */
-    public OfficeEntity(Integer orgId, String name, String address, String phone, Boolean isActive) {
-        this.orgId = orgId;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.isActive = isActive;
-    }
-
     /**
      * Getter and setter methods
      */

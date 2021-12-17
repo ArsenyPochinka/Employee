@@ -1,14 +1,14 @@
 package ru.bellintegrator.practice.employee.exception;
 
 /**
- * Исключение выбрасывается в случае отсутствия искомой записи в базе данных
+ * An exception is thrown if the desired record is missing in the database
  */
 public class RecordNotFoundException extends RuntimeException {
 
     /**
-     * Конструктор
+     * Constructor
      *
-     * @param message сообщение, описывающее исключительную ситуацию
+     * @param message a message describing an exceptional situation
      */
     public RecordNotFoundException(String message) {
         super(message);

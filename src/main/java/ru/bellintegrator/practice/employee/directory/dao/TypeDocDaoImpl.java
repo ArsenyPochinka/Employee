@@ -64,8 +64,7 @@ public class TypeDocDaoImpl implements TypeDocDao {
      * {@inheritDoc}
      */
     @Override
-    public TypeDocEntity save(TypeDocEntity newTypeDoc) {
+    public void save(TypeDocEntity newTypeDoc) {
         em.persist(newTypeDoc);
-        return newTypeDoc;
     }
 }

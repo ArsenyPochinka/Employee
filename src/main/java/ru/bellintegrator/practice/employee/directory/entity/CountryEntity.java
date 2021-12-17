@@ -39,16 +39,6 @@ public class CountryEntity {
 
     }
     /**
-     * Constructor Country
-     *
-     * @param name         name's country
-     * @param code         code's country
-     */
-    public CountryEntity(String name, String code) {
-        this.name = name;
-        this.code = code;
-    }
-    /**
      * Getter and setter methods
      */
     public Integer getId() {

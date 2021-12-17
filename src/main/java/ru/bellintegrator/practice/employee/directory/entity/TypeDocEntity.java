@@ -37,16 +37,6 @@ public class TypeDocEntity {
 
     }
     /**
-     * Constructor Type of doc
-     *
-     * @param name         name's type of doc
-     * @param code         code's type of doc
-     */
-    public TypeDocEntity(String name, String code) {
-        this.name = name;
-        this.code = code;
-    }
-    /**
      * Getter and setter methods
      */
     public Integer getId() {

@@ -19,8 +19,8 @@ public interface OfficeDao {
     /**
      * Returns the office with the specified ID
      *
-     * @param id (organization id)
-     * @return organization with the specified id
+     * @param id (office id)
+     * @return office with the specified id
      */
     OfficeEntity getById(Integer id);
 
