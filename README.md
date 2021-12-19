@@ -18,9 +18,13 @@ The practical application for BellIntegrator
 * https://github.com/ArsenyPochinka/Employee
 
 ## Pre-installation
-* Create a database in PostgreSQL and enter its coordinates and input parameters in "application.properties" by path: src/main/resources/application.properties
+1. Create a database in PostgreSQL and enter its coordinates and input parameters in "application.properties" by path: src/main/resources/application.properties
+2. First option: 
 * Create tables by running the file "schema.sql" (src/main/resources/schema.sql) in the database console
 * Fill tables with data by running the file "data.sql" (src/main/resources/data.sql) in the database console
+2. Second option:
+* Remove the commit in the "application.properties" (src/main/resources/application.properties) before launching the program in the line "#spring.datasource.initialization-mode=always"
+* After the first launch of the program, put the comment back so that the data in the table is not duplicated
 
 ## Build
 ```cmd
