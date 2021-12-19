@@ -1,0 +1,3 @@
+INSERT INTO Users (id, version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (3, 0, 3, 'Kirsenko', 'Konstantin', 'manager', '+7(955)345-23-55', 'true', 3);
+INSERT INTO Users (id, version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (4, 0, 3, 'Pochinka', 'Arseny', 'provider', '+7(912)345-23-56', 'true', 3);
+INSERT INTO Users (id, version, office_id, first_name, last_name, position, phone, is_identified, country_id) VALUES (5, 0, 4, 'Khafizov', 'Timur', 'doctor', '+7(912)345-23-12', 'true', 4);

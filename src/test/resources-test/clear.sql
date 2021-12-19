@@ -1,0 +1,11 @@
+DELETE FROM Users;
+DELETE FROM Doc;
+DELETE FROM Country;
+DELETE FROM Type_Doc;
+DELETE FROM Office;
+DELETE FROM Organization;
+
+
+
+
+

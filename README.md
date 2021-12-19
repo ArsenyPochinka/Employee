@@ -20,7 +20,7 @@ The practical application for BellIntegrator
 ## Pre-installation
 * Create a database in PostgreSQL and enter its coordinates and input parameters in "application.properties" by path: src/main/resources/application.properties
 * Create tables by running the file "schema.sql" (src/main/resources/schema.sql) in the database console
-* Fill tables with data by running the file "data.sql" (src/main/resources/data.sql) in the database console
+* Fill tables with data by running the file "create-country.sql" (src/main/resources/create-country.sql) in the database console
 
 ## Build
 ```cmd
