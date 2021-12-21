@@ -92,7 +92,6 @@ public class UserDaoImpl implements UserDao {
         if(updateUser.getDoc() != null) {
             user.setDoc(updateUser.getDoc());
         }
-        em.flush();
     }
     /**
      * {@inheritDoc}

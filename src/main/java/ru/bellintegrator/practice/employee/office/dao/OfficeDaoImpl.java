@@ -65,7 +65,6 @@ public class OfficeDaoImpl implements OfficeDao {
         if(updateOffice.getIsActive() != null) {
             office.setIsActive(updateOffice.getIsActive());
         }
-        em.flush();
     }
     /**
      * {@inheritDoc}

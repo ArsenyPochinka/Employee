@@ -64,7 +64,6 @@ public class OrganizationDaoImpl implements OrganizationDao {
         if(updateOrganization.getIsActive() != null) {
             organization.setIsActive(updateOrganization.getIsActive());
         }
-        em.flush();
     }
     /**
      * {@inheritDoc}
